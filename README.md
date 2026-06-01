@@ -2,6 +2,8 @@
 
 Website change monitoring with local AI-style summaries.
 
+[한국어 README](README.ko.md)
+
 Watchmark tracks pages where missing a change costs time or money: Korean public-sector notices, shopping/product pages, competitor landing pages, pricing pages, hiring pages, and policy pages. The open-source core can run locally, while the product can grow into a hosted SaaS with scheduled checks, team alerts, and richer AI summaries.
 
 ![Watchmark dashboard](docs/assets/watchmark-dashboard.png)
@@ -31,12 +33,12 @@ bun install
 bun run dev
 ```
 
-Open `http://127.0.0.1:3000`.
+Open `http://localhost:3000/watch`.
 
 API example:
 
 ```bash
-curl -i -X POST http://127.0.0.1:3000/api/check \
+curl -i -X POST http://localhost:3000/api/check \
   -H 'content-type: application/json' \
   -d '{"url":"https://example.com","name":"Example","category":"public"}'
 ```

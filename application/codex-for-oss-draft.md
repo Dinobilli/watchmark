@@ -1,6 +1,6 @@
 # Codex for Open Source Application Draft: Watchmark
 
-Use this as raw material for the form. Edit names, URLs, and maintainer details before submitting.
+Use this as raw material for the form. Edit only account-specific maintainer details before submitting.
 
 ## Project
 
@@ -8,7 +8,7 @@ Watchmark
 
 ## Repository URL
 
-Add the public GitHub URL after publishing this repository.
+https://github.com/Dinobilli/watchmark
 
 ## One-line summary
 
@@ -24,10 +24,11 @@ Many people and small teams manually re-check web pages: government notices, gra
 - Review scraper and normalizer changes for edge cases across HTML structures and Korean text.
 - Build release workflows, PR review checklists, and maintainer automation around the open-source monitor engine.
 - Improve documentation and examples for self-hosted users.
+- Check SSRF, XSS, and privacy regressions when URL-fetching or dashboard code changes.
 
 ## Open-source status
 
-The project is MIT licensed. The current MVP includes a Bun/Hono HTTP API, browser dashboard, deterministic local summarizer, tests, docs, CI, issue templates, release notes, a roadmap, and a security policy. It does not require private APIs to run.
+The project is MIT licensed. The current MVP includes a Bun/Hono HTTP API, browser dashboard, deterministic local summarizer, tests, docs, CI, issue templates, release notes, Korean README, a roadmap, Dependabot config, and a security policy. It does not require private APIs to run.
 
 ## Requested support
 
@@ -35,7 +36,7 @@ ChatGPT Pro with Codex would support rapid development of the open-source engine
 
 ## 500-character form answer: why this repo qualifies
 
-Watchmark는 한국 공공기관 공지, 지원사업, 쇼핑몰 상품 페이지, 경쟁사 가격/채용/약관 변화를 추적하는 MIT 오픈소스 모니터입니다. 단순 변경 알림이 아니라 의미 있는 텍스트 변화와 요약을 제공해 개인, 소상공인, 커뮤니티가 반복 확인 업무를 줄일 수 있습니다. CI, 테스트, 릴리스, 이슈 템플릿과 로드맵을 갖춘 공개 MVP입니다.
+Watchmark는 한국 공공기관 공지, 지원사업, 쇼핑몰 상품 페이지, 경쟁사 가격/채용/약관 변화를 추적하는 MIT 오픈소스 모니터입니다. 단순 변경 알림이 아니라 의미 있는 텍스트 변화와 요약을 제공해 반복 확인 업무를 줄입니다. CI, 테스트, 릴리스, 이슈 템플릿, 보안정책, 한글 README와 로드맵을 갖춘 공개 MVP입니다.
 
 ## 500-character form answer: API credit usage
 

@@ -9,7 +9,7 @@ bun install
 bun run dev
 ```
 
-Open `http://127.0.0.1:3000`.
+Open `http://localhost:3000/watch`.
 
 ## Quality Checks
 

@@ -1,37 +1,45 @@
 # GitHub Launch Checklist
 
-This repository should be public before submitting the Codex for Open Source form.
+This repository is public at `https://github.com/Dinobilli/watchmark`. Keep this checklist for future launch/release maintenance.
 
-## Before Publishing
+## Current Status
 
-- Confirm the GitHub profile is public.
+- Repository: `https://github.com/Dinobilli/watchmark`
+- Default branch: `main`
+- First release: `v0.1.0`
+
+## Repository Profile
+
+- Confirm the GitHub profile and repository remain public.
 - Choose a short repository description: `Open-source website change monitor with meaningful summaries for Korean public notices and product pages.`
 - Add topics: `website-monitoring`, `change-detection`, `korea`, `public-notices`, `ecommerce`, `typescript`, `bun`, `hono`, `open-source`.
 - Keep the license as MIT.
 
-## Publish
+## Maintenance Release
 
-Create the first commit locally:
+Run the local quality gate before pushing:
 
 ```bash
-git config user.name "<your name>"
-git config user.email "<your GitHub email or noreply email>"
+bun run lint
+bun run typecheck
+bun test
+bun run build
+```
+
+Commit and push the release-maintenance delta:
+
+```bash
 git add .
-git commit -m "Initial Watchmark OSS MVP"
+git commit -m "Harden Watchmark security and OSS docs"
+git push origin main
 ```
 
-Then create and push the public repository:
+Create a new tag only when publishing a new release:
 
 ```bash
-gh auth login
-gh repo create watchmark --public --source . --remote origin --push
-```
-
-If the repository already exists:
-
-```bash
-git remote add origin git@github.com:<your-github-username>/watchmark.git
-git push -u origin main
+git tag v0.1.1
+git push origin v0.1.1
+gh release create v0.1.1 --title "Watchmark v0.1.1" --notes-file RELEASE_NOTES_v0.1.1.md
 ```
 
 ## First Issues
@@ -46,17 +54,9 @@ Create the six issues from `docs/backlog.md`, then add labels such as:
 - `scheduler`
 - `alerts`
 
-## First Release
-
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-gh release create v0.1.0 --title "Watchmark v0.1.0" --notes-file RELEASE_NOTES.md
-```
-
 ## Before Applying
 
 - Check that the Actions tab shows a passing CI run.
-- Check that the release page shows `v0.1.0`.
+- Check that the release page shows `v0.1.0` or the latest published maintenance tag.
 - Check that README, LICENSE, ROADMAP, SECURITY, CONTRIBUTING, and issue templates are visible.
 - Use `docs/form-answers.ko.md` as the source for the form answers.
