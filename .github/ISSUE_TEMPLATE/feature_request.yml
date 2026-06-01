@@ -1,0 +1,38 @@
+name: Feature request
+description: Suggest a product, workflow, or maintainer-facing improvement.
+title: "Feature: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: What workflow would this unlock?
+      placeholder: I want to monitor public notices / product pages / competitor pages because ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest useful version of the feature.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Change detection
+        - Korean public-sector templates
+        - Shopping/product templates
+        - Notifications
+        - Dashboard
+        - Maintainer tooling
+        - Other
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional notes about tools or workflows you already tried.

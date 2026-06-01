@@ -1,0 +1,37 @@
+name: Bug report
+description: Report something that is broken or surprising in Watchmark.
+title: "Bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make Watchmark more reliable. Please avoid sharing private URLs, credentials, or paid-page content in public issues.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the behavior you saw and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Start Watchmark with ...
+        2. Watch ...
+        3. Run ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.1.0 or a commit SHA
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Logs, page type, site category, or screenshots that help explain the issue.

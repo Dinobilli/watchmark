@@ -1,0 +1,41 @@
+name: Site template request
+description: Request support for a public website pattern or noisy page type.
+title: "Template: "
+labels:
+  - template
+  - good first issue
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Watchmark is safest when templates are built from public pages or anonymized fixtures. Do not paste private customer pages or pages requiring login.
+  - type: input
+    id: site
+    attributes:
+      label: Site or page family
+      placeholder: e.g. public notice board, product detail page, procurement notice
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Korean public-sector notice
+        - Shopping/product page
+        - Competitor/pricing page
+        - Hiring/careers page
+        - Policy/terms page
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Public example URLs
+      description: Share 1-3 public URLs if possible.
+  - type: textarea
+    id: noise
+    attributes:
+      label: What should Watchmark ignore or highlight?
+      placeholder: Ignore header/footer/sidebar churn; highlight deadline, price, stock, title, attachment, or application changes.
