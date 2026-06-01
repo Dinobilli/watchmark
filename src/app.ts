@@ -23,6 +23,7 @@ export function createApp(options: CreateAppOptions = {}): Hono {
     })
 
   app.get("/", (context) => context.html(renderDashboardPage()))
+  app.get("/watch", (context) => context.html(renderDashboardPage()))
 
   app.post("/api/check", async (context) => {
     try {
@@ -38,7 +39,13 @@ export function createApp(options: CreateAppOptions = {}): Hono {
       }
       if (error instanceof Error) {
         return context.json(
-          { ok: false, error: { code: "FETCH_FAILED", message: error.message } },
+          {
+            ok: false,
+            error: {
+              code: "FETCH_FAILED",
+              message: "페이지를 가져오지 못했습니다. 공개 접근 가능한 URL인지 확인해 주세요.",
+            },
+          },
           502,
         )
       }

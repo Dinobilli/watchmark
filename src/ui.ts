@@ -70,7 +70,13 @@ export function renderDashboardPage(): string {
       const response = await fetch("/api/check", { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(data) });
       const payload = await response.json();
       if (!payload.ok) { result.textContent = payload.error.message; return; }
-      result.innerHTML = '<strong class="' + (payload.changed ? "changed" : "quiet") + '">' + (payload.changed ? "변경 감지" : "변경 없음") + '</strong><p>' + payload.summary + '</p>';
+      result.replaceChildren();
+      const status = document.createElement("strong");
+      status.className = payload.changed ? "changed" : "quiet";
+      status.textContent = payload.changed ? "변경 감지" : "변경 없음";
+      const summary = document.createElement("p");
+      summary.textContent = payload.summary;
+      result.append(status, summary);
     });
   </script>
 </body>

@@ -7,4 +7,4 @@ Bun.serve({
   fetch: createApp().fetch,
 })
 
-console.log(`Watchmark listening on http://127.0.0.1:${port}`)
+console.log(`Watchmark listening on http://localhost:${port}/watch`)

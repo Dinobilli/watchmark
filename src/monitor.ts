@@ -1,6 +1,15 @@
-import ky from "ky"
 import { z } from "zod"
+import { InvalidWatchInputError } from "./errors"
 import { extractMeaningfulText, summarizeMeaningfulChanges } from "./summarizer"
+import {
+  assertAllowedHttpUrl,
+  defaultResolveHostname,
+  fetchSafeHtml,
+  type HostResolver,
+  type HttpTransport,
+} from "./url-safety"
+
+export { InvalidWatchInputError } from "./errors"
 
 const WatchInputSchema = z.object({
   url: z.url(),
@@ -32,30 +41,30 @@ export type WatchmarkService = {
 
 export type WatchmarkServiceOptions = {
   readonly fetchHtml?: (url: string) => Promise<string>
+  readonly fetchResponse?: HttpTransport
+  readonly resolveHostname?: HostResolver
   readonly now?: () => Date
   readonly allowPrivateUrls?: boolean
 }
 
-export class InvalidWatchInputError extends Error {
-  readonly issues: readonly string[]
-
-  constructor(issues: readonly string[]) {
-    super("Invalid watch input")
-    this.name = "InvalidWatchInputError"
-    this.issues = issues
-  }
-}
-
 export function createWatchmarkService(options: WatchmarkServiceOptions = {}): WatchmarkService {
   const snapshots = new Map<string, string>()
-  const fetchHtml = options.fetchHtml ?? defaultFetchHtml
   const now = options.now ?? (() => new Date())
   const allowPrivateUrls = options.allowPrivateUrls ?? false
+  const fetchHtml =
+    options.fetchHtml ??
+    ((url: string) =>
+      fetchSafeHtml(
+        url,
+        allowPrivateUrls,
+        options.fetchResponse ?? fetch,
+        options.resolveHostname ?? defaultResolveHostname,
+      ))
 
   return {
     checkUrl: async (rawInput) => {
       const input = parseWatchInput(rawInput)
-      assertPublicUrl(input.url, allowPrivateUrls)
+      assertAllowedHttpUrl(input.url, allowPrivateUrls)
       const html = await fetchHtml(input.url)
       const meaningfulText = extractMeaningfulText(html)
       const previousText = snapshots.get(input.url)
@@ -77,29 +86,6 @@ export function createWatchmarkService(options: WatchmarkServiceOptions = {}): W
       )
     },
   }
-}
-
-function assertPublicUrl(url: string, allowPrivateUrls: boolean): void {
-  if (allowPrivateUrls) {
-    return
-  }
-  const hostname = new URL(url).hostname.toLowerCase()
-  if (isPrivateHostname(hostname)) {
-    throw new InvalidWatchInputError(["Private or local network URLs are blocked by default."])
-  }
-}
-
-function isPrivateHostname(hostname: string): boolean {
-  if (hostname === "localhost" || hostname === "::1" || hostname.endsWith(".local")) {
-    return true
-  }
-  if (/^127\./.test(hostname) || hostname === "0.0.0.0") {
-    return true
-  }
-  if (/^10\./.test(hostname) || /^192\.168\./.test(hostname)) {
-    return true
-  }
-  return /^172\.(1[6-9]|2\d|3[0-1])\./.test(hostname)
 }
 
 function parseWatchInput(input: WatchInput): WatchInput {
@@ -130,8 +116,4 @@ function buildResult(
     summary,
     diff: { meaningfulAdded, meaningfulRemoved },
   }
-}
-
-async function defaultFetchHtml(url: string): Promise<string> {
-  return ky.get(url, { timeout: 10_000, retry: { limit: 1 } }).text()
 }
