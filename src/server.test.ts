@@ -53,6 +53,47 @@ test("blocks_private_urls_without_dev_override", async () => {
   expect("error" in payload && typeof payload.error).toBe("object")
 })
 
+test("returns_empty_diff_arrays_for_unchanged_second_check", async () => {
+  const app = createApp({
+    service: {
+      checkUrl: async () => ({
+        ok: true,
+        watch: {
+          url: "https://example.com/notice",
+          name: "Example Notice",
+          category: "public",
+          checkedAt: "2026-06-02T00:00:00.000Z",
+        },
+        changed: false,
+        summary: "의미 있는 본문 변경은 감지되지 않았습니다.",
+        diff: {
+          meaningfulAdded: [],
+          meaningfulRemoved: [],
+        },
+      }),
+    },
+  })
+  const response = await app.request(
+    new Request("http://localhost/api/check", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://example.com/notice", name: "Example Notice" }),
+    }),
+  )
+  const payload: unknown = await response.json()
+
+  expect(response.status).toBe(200)
+  expect(payload).toBeObject()
+  if (payload === null || typeof payload !== "object") {
+    throw new TypeError("expected object payload")
+  }
+  expect("changed" in payload && payload.changed).toBe(false)
+  expect("diff" in payload && payload.diff).toEqual({
+    meaningfulAdded: [],
+    meaningfulRemoved: [],
+  })
+})
+
 test("does_not_expose_fetch_error_details", async () => {
   const leakedToken = ["gho", "private"].join("_")
   const leakedIp = ["10", "0", "0", "5"].join(".")

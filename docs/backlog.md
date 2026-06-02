@@ -1,6 +1,12 @@
-# Initial Maintainer Backlog
+# Maintainer Backlog
 
 Use these as the first GitHub issues after the repository is public.
+
+## Shipped
+
+- GitHub issue #3: dashboard diff view shipped in v0.1.2. The dashboard now shows capped
+  added/removed lines, empty diff states, and browser coverage for changed and unchanged
+  responses.
 
 ## 1. Add SQLite persistence for watches and snapshots
 
@@ -32,8 +38,8 @@ Labels: `enhancement`, `alerts`
 
 Send changed summaries to a user-provided webhook after a meaningful change is detected.
 
-## 6. Add a diff view to the dashboard
+## 6. Improve dashboard diff filtering
 
 Labels: `enhancement`, `dashboard`
 
-Show highlighted additions and removals next to the plain-language summary.
+Add search, copied text snippets, and per-section filters once persisted snapshots are available.

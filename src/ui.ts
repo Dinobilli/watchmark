@@ -6,7 +6,7 @@ export function renderDashboardPage(): string {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Watchmark - Website Change Monitor</title>
   <style>
-    :root { color-scheme: light; --ink:#17201a; --muted:#5d6a61; --line:#d9e2d9; --paper:#fbfaf4; --accent:#0b7a53; --warn:#b24b2f; }
+    :root { color-scheme: light; --ink:#17201a; --muted:#5d6a61; --line:#d9e2d9; --paper:#fbfaf4; --accent:#0b7a53; --warn:#b24b2f; --add:#0b7a53; --remove:#9d3324; }
     * { box-sizing: border-box; }
     body { margin:0; font-family: ui-serif, Georgia, "Times New Roman", serif; background: var(--paper); color: var(--ink); }
     main { max-width: 1120px; margin: 0 auto; padding: 42px 20px 56px; }
@@ -23,7 +23,14 @@ export function renderDashboardPage(): string {
     .result { margin-top:18px; border-left:4px solid var(--accent); padding:14px; background:#f2f8f1; min-height:92px; }
     .changed { color: var(--warn); font-weight:700; }
     .quiet { color:var(--muted); }
-    @media (max-width: 760px) { .hero, .examples { grid-template-columns: 1fr; } }
+    .diff-grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px; }
+    .diff-section { border:1px solid var(--line); border-radius:8px; background:white; padding:12px; min-width:0; }
+    .diff-section h3 { margin:0 0 8px; font-size:15px; }
+    .diff-section ul { margin:0; padding-left:18px; }
+    .diff-section li { margin:6px 0; overflow-wrap:anywhere; }
+    .diff-added h3 { color:var(--add); }
+    .diff-removed h3 { color:var(--remove); }
+    @media (max-width: 760px) { .hero, .examples, .diff-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -76,8 +83,58 @@ export function renderDashboardPage(): string {
       status.textContent = payload.changed ? "변경 감지" : "변경 없음";
       const summary = document.createElement("p");
       summary.textContent = payload.summary;
-      result.append(status, summary);
+      const addedLines = normalizeDiffLines(payload.diff?.meaningfulAdded);
+      const removedLines = normalizeDiffLines(payload.diff?.meaningfulRemoved);
+      const hasDiffLines = addedLines.length > 0 || removedLines.length > 0;
+      const diffGrid = document.createElement("div");
+      diffGrid.className = "diff-grid";
+      diffGrid.append(
+        renderDiffSection("추가된 내용", addedLines, "추가된 의미 있는 문구 없음", "diff-section diff-added"),
+        renderDiffSection("삭제된 내용", removedLines, "삭제된 의미 있는 문구 없음", "diff-section diff-removed"),
+      );
+      if (!hasDiffLines) {
+        const emptyDiff = document.createElement("p");
+        emptyDiff.className = "quiet";
+        emptyDiff.textContent = "변경 상세 없음";
+        result.append(status, summary, emptyDiff, diffGrid);
+        return;
+      }
+      result.append(status, summary, diffGrid);
     });
+    function normalizeDiffLines(value) {
+      if (!Array.isArray(value)) {
+        return [];
+      }
+      return value.filter((line) => typeof line === "string");
+    }
+    function renderDiffSection(title, lines, emptyText, className) {
+      const maxDiffItems = 5;
+      const section = document.createElement("section");
+      section.className = className;
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+      const list = document.createElement("ul");
+      if (lines.length === 0) {
+        const emptyItem = document.createElement("li");
+        emptyItem.className = "quiet";
+        emptyItem.textContent = emptyText;
+        list.append(emptyItem);
+      }
+      for (const line of lines.slice(0, maxDiffItems)) {
+        const item = document.createElement("li");
+        item.textContent = line;
+        list.append(item);
+      }
+      if (lines.length > maxDiffItems) {
+        const hiddenCount = lines.length - maxDiffItems;
+        const moreItem = document.createElement("li");
+        moreItem.className = "quiet";
+        moreItem.textContent = "외 " + hiddenCount + "개 더 있음";
+        list.append(moreItem);
+      }
+      section.append(heading, list);
+      return section;
+    }
   </script>
 </body>
 </html>`

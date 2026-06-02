@@ -1,15 +1,13 @@
-# Watchmark v0.1.0
+# Watchmark v0.1.2
 
-Watchmark v0.1.0 is the first public MVP of an open-source website change monitor focused on meaningful summaries for Korean public notices, shopping/product pages, and competitor intelligence.
+Watchmark v0.1.2 is a post-submission maintenance release that closes the first dashboard usability issue after the Codex OSS application.
 
 ## Highlights
 
-- Local dashboard and `POST /api/check` endpoint.
-- First check creates a baseline; later checks detect meaningful text changes.
-- Local deterministic summaries, so the MVP runs without an API key.
-- Boilerplate filtering to reduce noisy "page changed" alerts.
-- Private/local network URL guard to reduce SSRF-style risk.
-- Tests, typecheck, lint, build, CI, issue templates, and maintainer docs.
+- Dashboard now shows meaningful additions and removals next to the plain-language summary.
+- Unchanged checks keep a quiet "변경 상세 없음" state instead of noisy empty cards.
+- Added tests for dashboard diff rendering and unchanged diff responses.
+- README, changelog, and roadmap now show the ongoing maintenance trail.
 
 ## Install
 

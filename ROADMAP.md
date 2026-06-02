@@ -6,6 +6,7 @@
 - URL check API.
 - Baseline storage.
 - Meaningful text-change detection.
+- Diff view with added and removed meaningful lines.
 - Local summaries.
 - Private URL guard.
 - CI, tests, and maintainer docs.
@@ -23,7 +24,7 @@
 - Email and webhook notifications.
 - Slack and Discord integrations.
 - Alert grouping and quiet hours.
-- Diff view with highlighted additions and removals.
+- Richer diff filters for noisy dynamic sections.
 
 ## v0.4 - Hosted-Ready Core
 

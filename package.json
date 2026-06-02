@@ -1,6 +1,6 @@
 {
   "name": "watchmark",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Open-source website change monitor with meaningful summaries for Korean public notices and product pages.",
   "type": "module",
   "private": false,
@@ -22,7 +22,8 @@
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "start": "bun run dist/index.js",
-    "test": "bun test",
+    "test": "bun test src",
+    "browser-test": "playwright test",
     "typecheck": "bunx tsc --noEmit",
     "lint": "bunx @biomejs/biome check .",
     "build": "bun build ./src/index.ts --outdir dist --target bun"

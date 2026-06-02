@@ -2,6 +2,19 @@
 
 All notable changes to Watchmark will be documented in this file.
 
+## 0.1.2 - 2026-06-02
+
+### Added
+
+- Dashboard diff view for meaningful added and removed lines.
+- UI tests for changed and unchanged diff rendering.
+- Playwright browser tests for desktop and mobile dashboard diff states.
+- API characterization test for unchanged pages returning empty diff arrays.
+
+### Changed
+
+- README and roadmap now reflect the post-submission maintenance update.
+
 ## 0.1.1 - 2026-06-01
 
 ### Added

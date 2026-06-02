@@ -11,6 +11,28 @@ test("renders_dashboard_and_result", () => {
   expect(html).toContain("요약")
 })
 
+test("renders_dashboard_diff_view_from_changed_payload", () => {
+  const html = renderDashboardPage()
+
+  expect(html).toContain("추가된 내용")
+  expect(html).toContain("삭제된 내용")
+  expect(html).toContain("renderDiffSection")
+  expect(html).toContain("normalizeDiffLines")
+  expect(html).toContain("Array.isArray")
+  expect(html).toContain("외 ")
+  expect(html).toContain("payload.diff?.meaningfulAdded")
+  expect(html).toContain("payload.diff?.meaningfulRemoved")
+})
+
+test("renders_dashboard_empty_diff_state_from_unchanged_payload", () => {
+  const html = renderDashboardPage()
+
+  expect(html).toContain("변경 상세 없음")
+  expect(html).toContain("추가된 의미 있는 문구 없음")
+  expect(html).toContain("삭제된 의미 있는 문구 없음")
+  expect(html).toContain("diff-grid")
+})
+
 test("escapes_dashboard_result_content", () => {
   const html = renderDashboardPage()
 

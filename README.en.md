@@ -20,6 +20,7 @@ It stores a baseline, extracts meaningful text, filters common boilerplate, and 
 - Register or re-check a URL with `POST /api/check`.
 - Store the first check as the baseline snapshot.
 - Detect meaningful text changes on later checks.
+- Show added and removed meaningful lines directly in the dashboard.
 - Summarize changes locally without requiring an API key.
 - Ship a browser dashboard positioned for Korean public-sector and commerce use cases.
 - Block private/local network targets by default, including unsafe redirects.
@@ -46,6 +47,7 @@ curl -i -X POST http://localhost:3000/api/check \
 
 ```bash
 bun test
+bun run browser-test
 bun run typecheck
 bun run lint
 bun run build
@@ -78,6 +80,7 @@ The open-source project is the local monitoring engine and dashboard. A hosted p
 - Issue templates collect bug reports, feature requests, and public site-template requests.
 - `ROADMAP.md`, `CHANGELOG.md`, `SECURITY.md`, and `CONTRIBUTING.md` make the maintenance path visible.
 - `docs/backlog.md` lists the first public issues to seed the project after launch.
+- After the Codex OSS application, maintenance continues through issue-sized improvements and release notes. Example: `0.1.2` dashboard diff view.
 
 ## Codex for Open Source Fit
 
