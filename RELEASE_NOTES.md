@@ -1,13 +1,13 @@
-# Watchmark v0.1.2
+# Watchmark v0.1.3
 
-Watchmark v0.1.2 is a post-submission maintenance release that closes the first dashboard usability issue after the Codex OSS application.
+Watchmark v0.1.3 is an issue-driven maintenance release that closes the Korean public-notice fixture work.
 
 ## Highlights
 
-- Dashboard now shows meaningful additions and removals next to the plain-language summary.
-- Unchanged checks keep a quiet "변경 상세 없음" state instead of noisy empty cards.
-- Added tests for dashboard diff rendering and unchanged diff responses.
-- README, changelog, and roadmap now show the ongoing maintenance trail.
+- Adds anonymized Korean public-notice fixtures for title, deadline, attachment, department, and application-period changes.
+- Adds API and dashboard previews for those fixture diffs.
+- Keeps fixture content local and privacy-safe: no API keys, private URLs, login-only content, phone numbers, or personal emails.
+- Adds tests for fixture summaries, API responses, dashboard previews, and privacy guardrails.
 
 ## Install
 

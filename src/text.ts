@@ -14,6 +14,12 @@ const BOILERPLATE_MARKERS = [
   "이용약관",
   "쿠키",
   "로그인",
+  "본문 바로가기",
+  "전체메뉴",
+  "사이트맵",
+  "누리집 안내",
+  "저작권",
+  "관련사이트",
 ] as const
 
 function decodeEntities(raw: string): string {

@@ -80,6 +80,46 @@ test("blocks_non_http_url_schemes", async () => {
   expect(caughtError).toBeInstanceOf(InvalidWatchInputError)
 })
 
+test("blocks_urls_with_embedded_credentials_before_fetching", async () => {
+  let fetchCalls = 0
+  const service = createWatchmarkService({
+    fetchHtml: async () => {
+      fetchCalls += 1
+      return "<html><body><main>private</main></body></html>"
+    },
+  })
+
+  let caughtError: unknown
+  try {
+    await service.checkUrl({ url: "https://user:secret@example.com/private" })
+  } catch (error) {
+    caughtError = error
+  }
+
+  expect(caughtError).toBeInstanceOf(InvalidWatchInputError)
+  expect(fetchCalls).toBe(0)
+})
+
+test("blocks_url_fragments_before_fetching", async () => {
+  let fetchCalls = 0
+  const service = createWatchmarkService({
+    fetchHtml: async () => {
+      fetchCalls += 1
+      return "<html><body><main>private</main></body></html>"
+    },
+  })
+
+  let caughtError: unknown
+  try {
+    await service.checkUrl({ url: "https://example.com/notice#access_token=secret" })
+  } catch (error) {
+    caughtError = error
+  }
+
+  expect(caughtError).toBeInstanceOf(InvalidWatchInputError)
+  expect(fetchCalls).toBe(0)
+})
+
 test("blocks_ipv6_loopback_urls", async () => {
   const service = createWatchmarkService({
     fetchHtml: async () => "<html><body><main>private</main></body></html>",

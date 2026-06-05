@@ -21,6 +21,7 @@ It stores a baseline, extracts meaningful text, filters common boilerplate, and 
 - Store the first check as the baseline snapshot.
 - Detect meaningful text changes on later checks.
 - Show added and removed meaningful lines directly in the dashboard.
+- Preview anonymized Korean public-notice fixtures through the API and dashboard.
 - Summarize changes locally without requiring an API key.
 - Ship a browser dashboard positioned for Korean public-sector and commerce use cases.
 - Block private/local network targets by default, including unsafe redirects.
@@ -41,6 +42,12 @@ API example:
 curl -i -X POST http://localhost:3000/api/check \
   -H 'content-type: application/json' \
   -d '{"url":"https://example.com","name":"Example","category":"public"}'
+```
+
+Public-notice fixture API:
+
+```bash
+curl -i http://localhost:3000/api/fixtures/korean-public-notices/deadline-change
 ```
 
 ## Scripts
@@ -80,7 +87,7 @@ The open-source project is the local monitoring engine and dashboard. A hosted p
 - Issue templates collect bug reports, feature requests, and public site-template requests.
 - `ROADMAP.md`, `CHANGELOG.md`, `SECURITY.md`, and `CONTRIBUTING.md` make the maintenance path visible.
 - `docs/backlog.md` lists the first public issues to seed the project after launch.
-- After the Codex OSS application, maintenance continues through issue-sized improvements and release notes. Example: `0.1.2` dashboard diff view.
+- Maintenance continues through issue-sized improvements and release notes. Example: `0.1.3` Korean public-notice fixture pack.
 
 ## Codex for Open Source Fit
 

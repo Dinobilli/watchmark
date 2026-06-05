@@ -1,5 +1,10 @@
 import { Hono } from "hono"
 import { z } from "zod"
+import {
+  buildKoreanPublicNoticeFixtureResult,
+  findKoreanPublicNoticeFixture,
+  listKoreanPublicNoticeFixtureMetadata,
+} from "./korean-public-notice-fixtures"
 import { createWatchmarkService, InvalidWatchInputError, type WatchmarkService } from "./monitor"
 import { renderDashboardPage } from "./ui"
 
@@ -24,6 +29,28 @@ export function createApp(options: CreateAppOptions = {}): Hono {
 
   app.get("/", (context) => context.html(renderDashboardPage()))
   app.get("/watch", (context) => context.html(renderDashboardPage()))
+  app.get("/api/fixtures/korean-public-notices", (context) =>
+    context.json({
+      ok: true,
+      fixtures: listKoreanPublicNoticeFixtureMetadata(),
+    }),
+  )
+  app.get("/api/fixtures/korean-public-notices/:id", (context) => {
+    const fixture = findKoreanPublicNoticeFixture(context.req.param("id"))
+    if (fixture === undefined) {
+      return context.json(
+        {
+          ok: false,
+          error: {
+            code: "FIXTURE_NOT_FOUND",
+            message: "알 수 없는 공공 공고 예시입니다.",
+          },
+        },
+        404,
+      )
+    }
+    return context.json(buildKoreanPublicNoticeFixtureResult(fixture))
+  })
 
   app.post("/api/check", async (context) => {
     try {

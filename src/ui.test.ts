@@ -33,6 +33,23 @@ test("renders_dashboard_empty_diff_state_from_unchanged_payload", () => {
   expect(html).toContain("diff-grid")
 })
 
+test("renders_public_notice_fixture_preview_controls", () => {
+  const html = renderDashboardPage()
+
+  expect(html).toContain("fixture-preview")
+  expect(html).toContain('data-fixture-id="deadline-change"')
+  expect(html).toContain('data-fixture-id="attachment-change"')
+  expect(html).toContain("/api/fixtures/korean-public-notices/")
+})
+
+test("keeps_fixture_preview_rendering_text_safe", () => {
+  const html = renderDashboardPage()
+
+  expect(html).toContain("renderResult")
+  expect(html).toContain("textContent")
+  expect(html).not.toContain("innerHTML")
+})
+
 test("escapes_dashboard_result_content", () => {
   const html = renderDashboardPage()
 

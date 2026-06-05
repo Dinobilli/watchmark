@@ -1,6 +1,6 @@
 {
   "name": "watchmark",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Open-source website change monitor with meaningful summaries for Korean public notices and product pages.",
   "type": "module",
   "private": false,

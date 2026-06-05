@@ -2,6 +2,19 @@
 
 All notable changes to Watchmark will be documented in this file.
 
+## 0.1.3 - 2026-06-05
+
+### Added
+
+- Anonymized Korean public-notice fixtures for title, deadline, attachment, department, and application-period changes.
+- API endpoints for listing and previewing Korean public-notice fixtures without exposing raw HTML.
+- Dashboard controls for previewing Korean public-notice fixture diffs.
+- Privacy tests for public-notice fixtures and Korean public-notice boilerplate filtering.
+
+### Changed
+
+- README, roadmap, backlog, and release notes now show the issue #5 maintenance trail.
+
 ## 0.1.2 - 2026-06-02
 
 ### Added
@@ -13,7 +26,7 @@ All notable changes to Watchmark will be documented in this file.
 
 ### Changed
 
-- README and roadmap now reflect the post-submission maintenance update.
+- README and roadmap now reflect the maintenance update.
 
 ## 0.1.1 - 2026-06-01
 

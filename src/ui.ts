@@ -20,6 +20,10 @@ export function renderDashboardPage(): string {
     .examples { display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin:24px 0; }
     .example { border:1px solid var(--line); border-radius:8px; padding:14px; background:white; }
     .example b { display:block; margin-bottom:6px; }
+    .fixture-preview { margin:24px 0; }
+    .fixture-preview h2 { margin:0 0 10px; font-size:20px; }
+    .fixture-buttons { display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; }
+    .fixture-buttons button { margin-top:0; background:white; color:var(--accent); }
     .result { margin-top:18px; border-left:4px solid var(--accent); padding:14px; background:#f2f8f1; min-height:92px; }
     .changed { color: var(--warn); font-weight:700; }
     .quiet { color:var(--muted); }
@@ -30,7 +34,7 @@ export function renderDashboardPage(): string {
     .diff-section li { margin:6px 0; overflow-wrap:anywhere; }
     .diff-added h3 { color:var(--add); }
     .diff-removed h3 { color:var(--remove); }
-    @media (max-width: 760px) { .hero, .examples, .diff-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .hero, .examples, .fixture-buttons, .diff-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -60,6 +64,16 @@ export function renderDashboardPage(): string {
       <div class="example"><b>Shopping & Product</b><span>가격, 옵션, 품절, 상세페이지 문구 변경 추적</span></div>
       <div class="example"><b>Founder OSINT</b><span>경쟁사 랜딩, 약관, 채용 페이지 업데이트 요약</span></div>
     </section>
+    <section class="fixture-preview panel" aria-label="Korean public notice fixture preview">
+      <h2>공공 공고 예시</h2>
+      <div class="fixture-buttons">
+        <button type="button" data-fixture-id="notice-title-change">제목 변경</button>
+        <button type="button" data-fixture-id="deadline-change">마감일 변경</button>
+        <button type="button" data-fixture-id="attachment-change">첨부파일 변경</button>
+        <button type="button" data-fixture-id="department-change">담당부서 변경</button>
+        <button type="button" data-fixture-id="application-period-change">접수기간 변경</button>
+      </div>
+    </section>
     <section class="panel">
       <h2>변경 감지 결과</h2>
       <div id="result" class="result quiet">URL을 입력하면 첫 스냅샷을 저장하고, 다음 체크부터 의미 있는 변경을 요약합니다.</div>
@@ -70,12 +84,26 @@ export function renderDashboardPage(): string {
   <script>
     const form = document.querySelector("#watch-form");
     const result = document.querySelector("#result");
+    const fixtureButtons = document.querySelectorAll("[data-fixture-id]");
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
       result.textContent = "확인 중...";
       const response = await fetch("/api/check", { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(data) });
       const payload = await response.json();
+      renderResult(payload);
+    });
+    for (const button of fixtureButtons) {
+      button.addEventListener("click", async () => {
+        const fixtureId = button.getAttribute("data-fixture-id");
+        if (fixtureId === null) { return; }
+        result.textContent = "예시 불러오는 중...";
+        const response = await fetch("/api/fixtures/korean-public-notices/" + encodeURIComponent(fixtureId));
+        const payload = await response.json();
+        renderResult(payload);
+      });
+    }
+    function renderResult(payload) {
       if (!payload.ok) { result.textContent = payload.error.message; return; }
       result.replaceChildren();
       const status = document.createElement("strong");
@@ -100,7 +128,7 @@ export function renderDashboardPage(): string {
         return;
       }
       result.append(status, summary, diffGrid);
-    });
+    }
     function normalizeDiffLines(value) {
       if (!Array.isArray(value)) {
         return [];

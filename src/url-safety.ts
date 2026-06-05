@@ -18,6 +18,12 @@ export function assertAllowedHttpUrl(url: string, allowPrivateUrls: boolean): vo
   if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
     throw new InvalidWatchInputError(["Only http and https URLs are supported."])
   }
+  if (parsed.username !== "" || parsed.password !== "") {
+    throw new InvalidWatchInputError(["URL credentials are not supported."])
+  }
+  if (parsed.hash !== "") {
+    throw new InvalidWatchInputError(["URL fragments are not supported."])
+  }
   if (!allowPrivateUrls && isPrivateHostname(normalizeHostname(parsed.hostname))) {
     throw new InvalidWatchInputError(["Private or local network URLs are blocked by default."])
   }

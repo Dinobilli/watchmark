@@ -7,6 +7,7 @@
 - Baseline storage.
 - Meaningful text-change detection.
 - Diff view with added and removed meaningful lines.
+- Anonymized Korean public-notice fixture previews.
 - Local summaries.
 - Private URL guard.
 - CI, tests, and maintainer docs.
@@ -17,7 +18,7 @@
 - Scheduled checks.
 - Watch history.
 - Exportable fixtures for public pages.
-- More Korean public-sector and shopping-page examples.
+- More Korean public-sector patterns and shopping-page examples.
 
 ## v0.3 - Alerts
 
